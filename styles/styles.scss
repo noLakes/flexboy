@@ -50,3 +50,58 @@
 
 // css reset ends
 
+// page width responsive breakpoints
+$grid-bp-sm: 576;
+$grid-bp-md: 768;
+$grid-bp-lg: 992;
+$grid-bp-xl: 1200;
+
+// column variable
+$grid-cols: 12;
+
+.container {
+  max-width: $grid-bp-md * 1px;
+  margin: 0 auto;
+
+  &-fluid {
+    margin: 0;
+    max-width: 100vw;
+  }
+
+  &-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
+// creates media queries using the passed breakpoint value and then runs a given block in @content
+@mixin create-mq($breakpoint) {
+  @if ($breakpoint == 0) {
+    @content;
+  } @else {
+    @media screen and (min-width: $breakpoint * 1px) {
+      @content;
+    }
+  }
+}
+
+// creates columns in each breakpoint, uses breakpoin mixin to generate media queries
+@mixin create-col-classes($modifier, $grid-cols, $breakpoint) {
+  @include create-mq($breakpoint) {
+    @for $i from 1 through $grid-cols {
+      .col#{$modifier}-#{$i} {
+        flex-basis: (100 / ($grid-cols / $i) ) * 1%;
+      }
+    }
+  }
+}
+
+// maps breakpoint name to min pixel value
+$map-grid-props: ('': 0, '-sm': $grid-bp-sm, '-md': $grid-bp-md, '-lg': $grid-bp-lg, '-xl': $grid-bp-xl);
+
+
+// this loop is what uses the above map and mixins to actually write all the columns
+@each $modifier , $breakpoint in $map-grid-props {
+  @include create-col-classes($modifier, $grid-cols, $breakpoint)
+}
