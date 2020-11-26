@@ -76,6 +76,11 @@ input {
     display: flex;
     flex-wrap: wrap;
     width: 100%; }
+  .container-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; }
 
 .col-offset-0 {
   margin-left: 0; }

@@ -72,6 +72,13 @@ $map-grid-props: ('': 0, '-sm': $grid-bp-sm, '-md': $grid-bp-md, '-lg': $grid-bp
     flex-wrap: wrap;
     width: 100%;
   }
+
+  &-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 // this loop is what uses the above map and mixins to actually write all the columns
