@@ -36,6 +36,36 @@ input {
   -webkit-appearance: none;
   border-radius: 0; }
 
+@media screen and (max-width: -1px) {
+  .hidden-xs-down {
+    display: none !important; } }
+.hidden-xs-up {
+  display: none !important; }
+
+@media screen and (max-width: 575px) {
+  .hidden-sm-down {
+    display: none !important; } }
+@media screen and (min-width: 576px) {
+  .hidden-sm-up {
+    display: none !important; } }
+@media screen and (max-width: 767px) {
+  .hidden-md-down {
+    display: none !important; } }
+@media screen and (min-width: 768px) {
+  .hidden-md-up {
+    display: none !important; } }
+@media screen and (max-width: 991px) {
+  .hidden-lg-down {
+    display: none !important; } }
+@media screen and (min-width: 992px) {
+  .hidden-lg-up {
+    display: none !important; } }
+@media screen and (max-width: 1199px) {
+  .hidden-xl-down {
+    display: none !important; } }
+@media screen and (min-width: 1200px) {
+  .hidden-xl-up {
+    display: none !important; } }
 .container {
   max-width: 768px;
   margin: 0 auto; }

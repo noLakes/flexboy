@@ -59,28 +59,12 @@ $grid-bp-xl: 1200;
 // column variable
 $grid-cols: 12;
 
-.container {
-  max-width: $grid-bp-md * 1px;
-  margin: 0 auto;
-
-  &-fluid {
-    margin: 0;
-    max-width: 100vw;
-  }
-
-  &-row {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-}
-
 // creates media queries using the passed breakpoint value and then runs a given block in @content
-@mixin create-mq($breakpoint) {
+@mixin create-mq($breakpoint, $min-or-max) {
   @if ($breakpoint == 0) {
     @content;
   } @else {
-    @media screen and (min-width: $breakpoint * 1px) {
+    @media screen and (#{$min-or-max}-width: $breakpoint * 1px) {
       @content;
     }
   }
@@ -89,7 +73,7 @@ $grid-cols: 12;
 // creates columns in each breakpoint, uses breakpoin mixin to generate media queries
 // also creates column offset classes
 @mixin create-col-classes($modifier, $grid-cols, $breakpoint) {
-  @include create-mq($breakpoint) {
+  @include create-mq($breakpoint, 'min') {
     .col#{$modifier}-offset-0 {
       margin-left: 0;
     }
@@ -107,8 +91,40 @@ $grid-cols: 12;
 // maps breakpoint name to min pixel value
 $map-grid-props: ('': 0, '-sm': $grid-bp-sm, '-md': $grid-bp-md, '-lg': $grid-bp-lg, '-xl': $grid-bp-xl);
 
+@each $modifier , $breakpoint in $map-grid-props {
+  @if($modifier == '') {
+    $modifier: '-xs';
+  }
+  @include create-mq($breakpoint - 1, 'max') {
+    .hidden#{$modifier}-down {
+      display: none !important;
+    }
+  }
+  @include create-mq($breakpoint, 'min') {
+    .hidden#{$modifier}-up {
+      display: none !important;
+    }
+  }
+}
+
+.container {
+  max-width: $grid-bp-md * 1px;
+  margin: 0 auto;
+
+  &-fluid {
+    margin: 0;
+    max-width: 100vw;
+  }
+
+  &-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
 
 // this loop is what uses the above map and mixins to actually write all the columns
 @each $modifier , $breakpoint in $map-grid-props {
   @include create-col-classes($modifier, $grid-cols, $breakpoint)
 }
+
